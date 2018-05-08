@@ -3,11 +3,12 @@ import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, ViewContainerRef 
 import { EstimateService } from '../../services/estimate.service';
 import { Estimate } from '../../shared/model/estimate.model';
 import { Client } from '../../shared/model/client.model';
-import { TableOptions, TableColumn, ColumnMode } from 'angular2-data-table';
+//import { TableOptions, TableColumn, ColumnMode } from 'angular2-data-table';
 import { Broadcaster } from '../../shared/broadcast.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
+//import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
+import { Optional } from '@angular/core';
 import { overlayConfigFactory } from 'angular2-modal';
 import { User } from '../../shared/model/user.model';
 import { ClientService } from '../../services/client.service';
@@ -53,8 +54,8 @@ export class EstimateComponent implements OnInit, OnDestroy {
   @ViewChild('tmplDateEntered') tmplDateEntered: TemplateRef<any>;
   @ViewChild('tmplNumberHeader') tmplNumberHeader: TemplateRef<any>;
 
-  options: TableOptions = null;
-  jobOptions: TableOptions = null;
+  // options: TableOptions = null;
+  // jobOptions: TableOptions = null;
   searchValue = '';
   statusFilter = 'emptyjobs';
   closedEstimatesLoaded = false;
@@ -90,13 +91,13 @@ export class EstimateComponent implements OnInit, OnDestroy {
   emptyJobs$: Observable<EmptyJob[]>;
   filteredJobs: EmptyJob[] = [];
   originalJobs: EmptyJob[] = [];
-  emptyJobOptions: TableOptions = null;
+  // emptyJobOptions: TableOptions = null;
   emptyJobCount = 0;
   userHasRole = this.userService.userHasRole.bind(this.userService);
 
   constructor(private estimateService: EstimateService,
     private broadcaster: Broadcaster,
-    private modal: Modal,
+   // private modal: Modal,
     private userService: UserService,
     private clientService: ClientService,
     private spinnyService: SpinnyService,
@@ -123,8 +124,9 @@ export class EstimateComponent implements OnInit, OnDestroy {
 
     this.subscription = this.broadcaster.on<Client>('client-changed')
       .subscribe((message: any) => {
-        if (this.clientService.currentClientId != -1)
+        if (this.clientService.currentClientId !== -1) {
           this.loadEstimateData(this.clientService.currentClientId);
+        }
         this.searchValue = '';
         this.currencyCode = this.clientService.currencyCodeByKey(message.currencyCode);
         this.updateFilter('');
@@ -143,7 +145,7 @@ export class EstimateComponent implements OnInit, OnDestroy {
 
   openNotesPopup(row) {
     this.notesForPopup = row.notes;
-    this.modal.open(this.tmplNotesPopup, overlayConfigFactory({ isBlocking: true }, BSModalContext));
+    //this.modal.open(this.tmplNotesPopup, overlayConfigFactory({ isBlocking: true }, BSModalContext));
   }
 
   loadEstimateData(clientId: number) {
@@ -225,7 +227,7 @@ export class EstimateComponent implements OnInit, OnDestroy {
   }
 
   updateFilter(searchValue: string) {
-    this.options.offset = 0;
+   // this.options.offset = 0;
     this.searchValue = searchValue;
     let searches = searchValue.split(' ');
     this.filteredEstimates.splice(0, this.filteredEstimates.length);
@@ -257,118 +259,118 @@ export class EstimateComponent implements OnInit, OnDestroy {
 
   initializeTable() {
 
-    this.options = new TableOptions({
-      columnMode: ColumnMode.force,
-      headerHeight: 'auto',
-      footerHeight: false,
-      rowHeight: 'auto',
-      scrollbarH: true,
-      // limit: 10,
-      columns: [
-        new TableColumn({ prop: 'projectNumber', name: 'Project #', width: 90, cellTemplate: this.linkTemplate }),
-        new TableColumn({ prop: 'projectName', name: 'Project Name', width: 120 }),
-        new TableColumn({ prop: 'brandName', name: 'Brand', width: 120 }),
-        // new TableColumn({ prop: 'po', name: 'PO', width: 70, cellTemplate: this.poTemplate }),
-        new TableColumn({ prop: 'poAmount', width: 100, name: 'PO Amount', cellTemplate: this.poAmountTemplate, headerTemplate: this.tmplNumberHeader }),
-        new TableColumn({ prop: 'jobCount', width: 50, name: 'Jobs', cellTemplate: this.numberTemplate, headerTemplate: this.tmplNumberHeader }),
-        new TableColumn({ prop: 'dateEntered', width: 100, name: 'Date Entered', cellTemplate: this.tmplDateEntered, headerTemplate: this.tmplNumberHeader }),
-        new TableColumn({ prop: 'status', width: 80, name: 'Estimate Status' }),
-        new TableColumn({ prop: 'totalEstimate', name: 'Total Estimate', cellTemplate: this.currencyTemplate, width: 100, headerTemplate: this.tmplNumberHeader }),
-        new TableColumn({ prop: 'invoicedToDate', name: 'Invoiced to Date', cellTemplate: this.currencyTemplate, width: 120, headerTemplate: this.tmplNumberHeader }),
-        new TableColumn({ prop: 'toBeInvoiced', name: 'To be Invoiced', cellTemplate: this.currencyTemplate, width: 100, headerTemplate: this.tmplNumberHeader }),
-        new TableColumn({ prop: 'notes', name: ' ', width: 80, cellTemplate: this.tmplNotesCol, sortable: false })
-      ]
-    });
+    //this.options = new TableOptions({
+    //   columnMode: ColumnMode.force,
+    //   headerHeight: 'auto',
+    //   footerHeight: false,
+    //   rowHeight: 'auto',
+    //   scrollbarH: true,
+    //   // limit: 10,
+    //   columns: [
+    //     new TableColumn({ prop: 'projectNumber', name: 'Project #', width: 90, cellTemplate: this.linkTemplate }),
+    //     new TableColumn({ prop: 'projectName', name: 'Project Name', width: 120 }),
+    //     new TableColumn({ prop: 'brandName', name: 'Brand', width: 120 }),
+    //     // new TableColumn({ prop: 'po', name: 'PO', width: 70, cellTemplate: this.poTemplate }),
+    //     new TableColumn({ prop: 'poAmount', width: 100, name: 'PO Amount', cellTemplate: this.poAmountTemplate, headerTemplate: this.tmplNumberHeader }),
+    //     new TableColumn({ prop: 'jobCount', width: 50, name: 'Jobs', cellTemplate: this.numberTemplate, headerTemplate: this.tmplNumberHeader }),
+    //     new TableColumn({ prop: 'dateEntered', width: 100, name: 'Date Entered', cellTemplate: this.tmplDateEntered, headerTemplate: this.tmplNumberHeader }),
+    //     new TableColumn({ prop: 'status', width: 80, name: 'Estimate Status' }),
+    //     new TableColumn({ prop: 'totalEstimate', name: 'Total Estimate', cellTemplate: this.currencyTemplate, width: 100, headerTemplate: this.tmplNumberHeader }),
+    //     new TableColumn({ prop: 'invoicedToDate', name: 'Invoiced to Date', cellTemplate: this.currencyTemplate, width: 120, headerTemplate: this.tmplNumberHeader }),
+    //     new TableColumn({ prop: 'toBeInvoiced', name: 'To be Invoiced', cellTemplate: this.currencyTemplate, width: 100, headerTemplate: this.tmplNumberHeader }),
+    //     new TableColumn({ prop: 'notes', name: ' ', width: 80, cellTemplate: this.tmplNotesCol, sortable: false })
+    //   ]
+    // });
     if (this.userHasRole(2)) {
-      this.options = new TableOptions({
-        columnMode: ColumnMode.force,
-        headerHeight: 'auto',
-        footerHeight: false,
-        rowHeight: 'auto',
-        scrollbarH: true,
-        // limit: 10,
-        columns: [
-          new TableColumn({ prop: 'projectNumber', name: 'Project #', width: 90, cellTemplate: this.linkTemplate }),
-          new TableColumn({ prop: 'projectName', name: 'Project Name', width: 120 }),
-          new TableColumn({ prop: 'brandName', name: 'Brand', width: 120 }),
-          // new TableColumn({ prop: 'po', name: 'PO', width: 70, cellTemplate: this.poTemplate }),
-          new TableColumn({ prop: 'poAmount', width: 100, name: 'PO Amount', cellTemplate: this.poAmountTemplate, headerTemplate: this.tmplNumberHeader }),
-          new TableColumn({ prop: 'jobCount', width: 50, name: 'Jobs', cellTemplate: this.numberTemplate, headerTemplate: this.tmplNumberHeader }),
-          new TableColumn({ prop: 'dateEntered', width: 100, name: 'Date Entered', cellTemplate: this.tmplDateEntered, headerTemplate: this.tmplNumberHeader }),
-          new TableColumn({ prop: 'status', width: 80, name: 'Estimate Status' }),
-          new TableColumn({ prop: 'totalEstimate', name: 'Total Estimate', cellTemplate: this.currencyTemplate, width: 100, headerTemplate: this.tmplNumberHeader }),
-          new TableColumn({ prop: 'invoicedToDate', name: 'Invoiced to Date', cellTemplate: this.currencyTemplate, width: 120, headerTemplate: this.tmplNumberHeader }),
-          new TableColumn({ prop: 'toBeInvoiced', name: 'To be Invoiced', cellTemplate: this.currencyTemplate, width: 100 }),
-          new TableColumn({ prop: 'notes', name: ' ', width: 80, cellTemplate: this.tmplNotesCol, sortable: false })
-        ]
-      });
-    }
+      //this.options = new TableOptions({
+    //     columnMode: ColumnMode.force,
+    //     headerHeight: 'auto',
+    //     footerHeight: false,
+    //     rowHeight: 'auto',
+    //     scrollbarH: true,
+    //     // limit: 10,
+    //     columns: [
+    //       new TableColumn({ prop: 'projectNumber', name: 'Project #', width: 90, cellTemplate: this.linkTemplate }),
+    //       new TableColumn({ prop: 'projectName', name: 'Project Name', width: 120 }),
+    //       new TableColumn({ prop: 'brandName', name: 'Brand', width: 120 }),
+    //       // new TableColumn({ prop: 'po', name: 'PO', width: 70, cellTemplate: this.poTemplate }),
+    //       new TableColumn({ prop: 'poAmount', width: 100, name: 'PO Amount', cellTemplate: this.poAmountTemplate, headerTemplate: this.tmplNumberHeader }),
+    //       new TableColumn({ prop: 'jobCount', width: 50, name: 'Jobs', cellTemplate: this.numberTemplate, headerTemplate: this.tmplNumberHeader }),
+    //       new TableColumn({ prop: 'dateEntered', width: 100, name: 'Date Entered', cellTemplate: this.tmplDateEntered, headerTemplate: this.tmplNumberHeader }),
+    //       new TableColumn({ prop: 'status', width: 80, name: 'Estimate Status' }),
+    //       new TableColumn({ prop: 'totalEstimate', name: 'Total Estimate', cellTemplate: this.currencyTemplate, width: 100, headerTemplate: this.tmplNumberHeader }),
+    //       new TableColumn({ prop: 'invoicedToDate', name: 'Invoiced to Date', cellTemplate: this.currencyTemplate, width: 120, headerTemplate: this.tmplNumberHeader }),
+    //       new TableColumn({ prop: 'toBeInvoiced', name: 'To be Invoiced', cellTemplate: this.currencyTemplate, width: 100 }),
+    //       new TableColumn({ prop: 'notes', name: ' ', width: 80, cellTemplate: this.tmplNotesCol, sortable: false })
+    //     ]
+    //   });
+     }
 
-    this.emptyJobOptions = new TableOptions({
-      columnMode: ColumnMode.force,
-      headerHeight: 50,
-      footerHeight: 50,
-      rowHeight: 'auto',
-      scrollbarH: true,
-      columns: [
-        new TableColumn({ prop: 'jobNumber', name: 'Job #', width: 90 }),
-        new TableColumn({ prop: 'projectNumber', name: 'Project #', width: 90, cellTemplate: this.projectNoLinkTemplate }),
-        new TableColumn({ prop: 'projectName', name: 'Project Name', width: 180 }),
-        new TableColumn({ prop: 'brandName', name: 'Brand', width: 120 }),
-        new TableColumn({ prop: 'projectStatus', name: 'Project Status', width: 100 }),
-        new TableColumn({ prop: 'dateEntered', name: 'Date Entered', width: 180, cellTemplate: this.tmplDateEntered, headerTemplate: this.tmplNumberHeader }),
-      ]
-    });
+    // this.emptyJobOptions = new TableOptions({
+    //   columnMode: ColumnMode.force,
+    //   headerHeight: 50,
+    //   footerHeight: 50,
+    //   rowHeight: 'auto',
+    //   scrollbarH: true,
+    //   columns: [
+    //     new TableColumn({ prop: 'jobNumber', name: 'Job #', width: 90 }),
+    //     new TableColumn({ prop: 'projectNumber', name: 'Project #', width: 90, cellTemplate: this.projectNoLinkTemplate }),
+    //     new TableColumn({ prop: 'projectName', name: 'Project Name', width: 180 }),
+    //     new TableColumn({ prop: 'brandName', name: 'Brand', width: 120 }),
+    //     new TableColumn({ prop: 'projectStatus', name: 'Project Status', width: 100 }),
+    //     new TableColumn({ prop: 'dateEntered', name: 'Date Entered', width: 180, cellTemplate: this.tmplDateEntered, headerTemplate: this.tmplNumberHeader }),
+    //   ]
+    // });
 
-    this.jobOptions = new TableOptions({
-      columnMode: ColumnMode.force,
-      headerHeight: 50,
-      footerHeight: 50,
-      rowHeight: 'auto',
-      scrollbarH: true,
-      // limit: 10,
-      columns: [
-        new TableColumn({ prop: 'projectNumber', name: 'Project #', width: 90, cellTemplate: this.projectNoLinkTemplate }),
-        new TableColumn({ prop: 'jobNumber', name: 'Job #', width: 80 }),
-        new TableColumn({ prop: 'projectName', name: 'Project Name', width: 180 }),
-        new TableColumn({ prop: 'brandName', name: 'Brand', width: 120 }),
-        new TableColumn({ prop: 'invoice', width: 150, name: 'Invoice Amount', cellTemplate: this.poAmountTemplate }),
-        new TableColumn({
-          name: 'Lock', prop: 'lock', width: 80, canAutoResize: false, resizeable: false, sortable: false,
-          cellTemplate: this.tmplLockCol
-        }),
-        new TableColumn({
-          prop: '', width: 120, canAutoResize: false, resizeable: false, sortable: false,
-          cellTemplate: this.tmplJobCostCol
-        }),
-        new TableColumn({
-          prop: '', width: 220, canAutoResize: false, resizeable: false, sortable: false,
-          cellTemplate: this.tmplInvoiceReportCol
-        }),
-        new TableColumn({
-          name: 'File', prop: 'fileNameString', width: 380, canAutoResize: false, resizeable: false, sortable: false, cellTemplate: this.linkFileTemplate
-        }),
-      ]
-    });
+    // this.jobOptions = new TableOptions({
+    //   columnMode: ColumnMode.force,
+    //   headerHeight: 50,
+    //   footerHeight: 50,
+    //   rowHeight: 'auto',
+    //   scrollbarH: true,
+    //   // limit: 10,
+    //   columns: [
+    //     new TableColumn({ prop: 'projectNumber', name: 'Project #', width: 90, cellTemplate: this.projectNoLinkTemplate }),
+    //     new TableColumn({ prop: 'jobNumber', name: 'Job #', width: 80 }),
+    //     new TableColumn({ prop: 'projectName', name: 'Project Name', width: 180 }),
+    //     new TableColumn({ prop: 'brandName', name: 'Brand', width: 120 }),
+    //     new TableColumn({ prop: 'invoice', width: 150, name: 'Invoice Amount', cellTemplate: this.poAmountTemplate }),
+    //     new TableColumn({
+    //       name: 'Lock', prop: 'lock', width: 80, canAutoResize: false, resizeable: false, sortable: false,
+    //       cellTemplate: this.tmplLockCol
+    //     }),
+    //     new TableColumn({
+    //       prop: '', width: 120, canAutoResize: false, resizeable: false, sortable: false,
+    //       cellTemplate: this.tmplJobCostCol
+    //     }),
+    //     new TableColumn({
+    //       prop: '', width: 220, canAutoResize: false, resizeable: false, sortable: false,
+    //       cellTemplate: this.tmplInvoiceReportCol
+    //     }),
+    //     new TableColumn({
+    //       name: 'File', prop: 'fileNameString', width: 380, canAutoResize: false, resizeable: false, sortable: false, cellTemplate: this.linkFileTemplate
+    //     }),
+    //   ]
+    // });
   }
 
   // method to update lock value for selected job and rebind the grid
   updatejobLockCheckboxValue(event, prop, value, row) {
-    row[prop] = event.target.checked;
-    row.dirty = true;
-    this.spinnyService.start();
-    this.estimateService.updateJobLockValue(row['jobId'], row[prop])
-      .subscribe((result) => {
-        this.spinnyService.stop();
-        if (result)
-          this.loadJobsToBeInvoiced();
-        else
-          console.log('error');
-      }, (error) => {
-        console.log('error');
-        this.loadJobsToBeInvoiced();
-        this.spinnyService.stop();
-      });
+    // row[prop] = event.target.checked;
+    // row.dirty = true;
+    // this.spinnyService.start();
+    // this.estimateService.updateJobLockValue(row['jobId'], row[prop])
+    //   .subscribe((result) => {
+    //     this.spinnyService.stop();
+    //     if (result)
+    //       this.loadJobsToBeInvoiced();
+    //     else
+    //       console.log('error');
+    //   }, (error) => {
+    //     console.log('error');
+    //     this.loadJobsToBeInvoiced();
+    //     this.spinnyService.stop();
+    //   });
   }
 
   setCurrentStatusFilter(status: string) {
@@ -409,7 +411,7 @@ export class EstimateComponent implements OnInit, OnDestroy {
         this.updateFilter('');
       }
       // this is the options offset that controls the page of the data table. It's zero indexed.
-      this.options.offset = 0;
+      //this.options.offset = 0;
     } else if (status === 'emptyjobs') {
       if (!this.emptyJobsLoaded) {
         this.emptyJobs$.subscribe(
@@ -480,14 +482,14 @@ export class EstimateComponent implements OnInit, OnDestroy {
     this.selectedEntityNumber = null;
     this.fetchNewEstimateDataAsync().subscribe((result) => {
       this.spinnyService.stop();
-      this.modal.open(this.tmplAddEstimate, overlayConfigFactory({ isBlocking: true }, BSModalContext))
-        .then((resultPromise) => { // this promise fires when the dialog is opened
-          return resultPromise.result.then((res) => { // this promise fires when the dialog is closed, Ok = true, Cancel = false
-            if (res) {
-              this.addEstimateWorker();
-            }
-          });
-        });
+      // this.modal.open(this.tmplAddEstimate, overlayConfigFactory({ isBlocking: true }, BSModalContext))
+      //   .then((resultPromise) => { // this promise fires when the dialog is opened
+      //     return resultPromise.result.then((res) => { // this promise fires when the dialog is closed, Ok = true, Cancel = false
+      //       if (res) {
+      //         this.addEstimateWorker();
+      //       }
+      //     });
+      //   });
     }, (err) => {
       this.spinnyService.stop();
       this._toastr.error('An error was encountered while fetching client/contact data - ' + err, 'Error');
@@ -506,7 +508,7 @@ export class EstimateComponent implements OnInit, OnDestroy {
 
     let targetStatus = _.find(this.statuses, (x) => x.name === "Open");
 
-    this.newEstimate.statusId = targetStatus != void 0 ? targetStatus.id : this.statuses[0].id;
+    this.newEstimate.statusId = targetStatus !== void 0 ? targetStatus.id : this.statuses[0].id;
     this.newEstimate.brandId = null;
     this.newEstimate.billingCustomerId = this.clientService.currentClientId
     this.newEstimate.clientId = this.clientService.currentClientId
