@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
+import { SpinnyService } from './shared/spinny/spinny.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  constructor(private spinnyService: SpinnyService, private vcRef: ViewContainerRef) {
+    spinnyService.defaultViewContainer = vcRef;
+}
 }

@@ -1,0 +1,180 @@
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <img class="nonCTAs" src="./assets/img/brand/mySales_logo_white.png">
+        <img class="CTAs" src="./assets/img/brand/mysale.png">
+
+        <a (click)='toggle()' class="toggle CTAs fas fa-angle-right"></a>
+        <a (click)='toggle()' class="toggle nonCTAs fas fa-angle-left"></a>
+
+    </div>
+
+    <ul class="list-unstyled components">
+        <li>
+            <a aria-expanded="false">
+                <i class="fas fa-redo-alt"></i>
+                My Client
+            </a>
+        </li>
+        <li class="main nonCTAs">
+            MAIN
+        </li>
+        <li class="nonCTAs">
+            <a aria-expanded="false">
+                <i class="fas fa-home"></i>
+                Client Home (TBD
+            </a>
+        </li>
+        <li class="CTAs">
+            <a aria-expanded="false">
+                <i class="fas fa-home"></i>
+                Home
+            </a>
+        </li>
+        <li>
+            <a routerLink="estimates" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}"
+                aria-expanded="false">
+                <i class="far fa-file-alt"></i>
+                <span class="lbl">Estimates</span>
+            </a>
+        </li>
+
+        <li class="nonCTAs">
+            <a routerLink="openPO" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}" aria-expanded="false">
+                <i class="far fa-folder-open"></i>
+                <span> Manage POs</span>
+            </a>
+        </li>
+        <li class="CTAs">
+            <a routerLink="openPO" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}" aria-expanded="false">
+                <i class="far fa-folder-open"></i>
+                <span>POs</span>
+            </a>
+        </li>
+    </ul>
+    <section *ngIf="canViewFinance">
+        <ul class="list-unstyled components">
+
+            <li class="main nonCTAs">
+                FINANCE
+            </li>
+            <li>
+                <a routerLink="salesorder" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}"
+                    aria-expanded="false">
+                    <i class="fas fa-donate"></i>
+                    <span>Sales Invoice
+                        <span *ngIf="salesOrderCount>0" class="label label-pill label-success" style="color: white !important;">{{salesOrderCount}}</span>
+                    </span>
+                </a>
+
+            </li>
+        </ul>
+    </section>
+
+    <section *ngIf="currentUser.canManageAccess">
+        <ul class="list-unstyled components">
+            <li class="main nonCTAs">
+                SETTING
+            </li>
+            <li>
+                <a routerLink="admin/users" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}"
+                    aria-expanded="false">
+                    <i class="fas fa-users"></i>
+                    <span>Manage Role</span>
+                </a>
+            </li>
+            <li class="nonCTAs">
+                <a routerLink="customer-pricing" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}"
+                    aria-expanded="false">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>Customer Pricing</span>
+                </a>
+            </li>
+            <li class="CTAs">
+                <a routerLink="customer-pricing" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}"
+                    aria-expanded="false">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>Pricing</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+</nav>
+
+<!-- 
+<nav class="side-menu" id="side-menu">
+    <div class="wrap">
+        <div class="inner">
+            <ul class="side-menu-list">
+                <li class="pink-red">
+                    <a routerLink="estimates" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}">
+                        <i class="font-icon font-icon-list-square"></i>
+                        <span class="lbl">Estimates</span>
+                    </a>
+                </li>
+                <li class="pink-red">
+                    <a routerLink="openPO" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}">
+                        <i class="font-icon font-icon-list-square"></i>
+                        <span class="lbl">Open POs</span>
+                    </a>
+                </li>
+                <li class="pink-red">
+                    <a routerLink="userprofile" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}">
+                        <i class="font-icon font-icon-user"></i>
+                        <span class="lbl">My Profile</span>
+                    </a>
+                </li>
+
+            </ul>
+            <section *ngIf="canViewFinance">
+                <header class="side-menu-title">FINANCE</header>
+                <ul class="side-menu-list">
+                    <li class="pink-red">
+                        <a routerLink="jobcost" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}">
+                            <i class="font-icon fa fa-newspaper-o"></i>
+                            <span class="lbl">Job Cost <span *ngIf="jobCostCount>0" class="count-span label label-pill label-success" style="color: white !important;" >{{jobCostCount}}</span></span>
+                        </a>
+                    </li>
+                    <li class="pink-red">
+                        <a routerLink="salesorder" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}">
+                            <i class="font-icon fa fa-money"></i>
+                            <span class="lbl">Sales Order <span *ngIf="salesOrderCount>0" class="label label-pill label-success" style="color: white !important;" >{{salesOrderCount}}</span></span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+            <section *ngIf="currentUser.canManageAccess">
+                <header class="side-menu-title">Administrative</header>
+                <ul class="side-menu-list">
+                    <li class="pink-red">
+                        <a routerLink="admin/users" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}">
+                            <i class="font-icon font-icon-users"></i>
+                            <span class="lbl">Manage Users</span>
+                        </a>
+                    </li>
+                    <li class="pink-red" *ngIf="canViewPricing">
+                        <a routerLink="customer-pricing" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}">
+                            <i class="font-icon font-icon-dashboard"></i>
+                            <span class="lbl">Customer Pricing</span>
+                        </a>
+                    </li>
+                    <li class="pink-red">
+                        <a routerLink="apiLog" (click)="onLinkClick()" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}">
+                            <i class="font-icon font-icon-notebook"></i>
+                            <span class="lbl">API Log</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+            <!-- <ul class="side-menu-list">
+                <li class="pink-red">
+                    <app-logout></app-logout>
+                </li>
+            </ul> -->
+<!-- </div>
+    </div>
+    <section class="footer">
+        <header class="side-menu-title">
+            <app-version></app-version>
+        </header>
+    </section>
+</nav>  -->

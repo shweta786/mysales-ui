@@ -1,0 +1,105 @@
+.site-logo {
+  background-color: #4fa800 !important;
+  border: none;
+  // height: 85px;
+  // width: 11.5rem !important;
+
+  // img {
+  //   height: 65px;
+  //   width: 11.5rem;
+  // }
+}
+
+.site-header {
+  background-color: #4fa800;
+}
+
+.active-side-menu {
+  left: 0 !important;
+}
+
+#userDiv {
+  display: none;
+}
+@media only screen and (max-width: 991px) {
+  .userDropdown {
+    display: none;
+  }
+
+  #userDiv {
+    display: block;
+    margin-bottom: 3.5rem;
+
+    div {
+      font-weight: 800 !important;
+      font-size: large;
+      text-align: left;
+      padding: 0;
+    }
+  }
+
+  .rightMenu {
+    right: 0 !important;
+  }
+
+  .site-header {
+    .hamburger {
+      top: 10px;
+      margin: 0;
+      display: block;
+    }
+
+    .site-header-content {
+      float: none;
+      margin-left: 0;
+      padding: 10px 0;
+    }
+
+    .site-logo {
+      height: 3.5rem;
+      width: 10rem;
+
+      img {
+        top: -5px;
+        height: 3.5rem;
+        width: 10rem;
+      }
+    }
+
+    .site-header-collapsed {
+      right:-25rem;
+      top: 5rem;
+      height: 25vh;
+      min-height:150px;
+      width: 0;
+      background-color: #eceff4;
+      color: black;
+      border: 1px solid #cccccc;
+    }
+
+    .site-header-expanded{
+      width: 100%;
+      right:0rem;
+    }
+  }
+
+  .hero {
+    position: relative;
+    background-color: #e15915;
+    height: 320px !important;
+    width: 100% !important;
+  }
+
+  .hero:after {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 100%;
+    margin-left: -100px;
+    width: 0;
+    height: 0;
+    border-bottom: solid 50px #e15915;
+    border-left: solid 50px transparent;
+    border-right: solid 50px transparent;
+  }
+}

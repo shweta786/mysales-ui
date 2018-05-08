@@ -1,0 +1,114 @@
+.page-center {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.page-center-in {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 20px 0;
+}
+
+#login-container {
+  height: 100vh;
+}
+
+.form-control.ng-dirty.ng-invalid {
+  background-color: #fff6f6;
+  border-color: #fa424a;
+  color: #fa4afa;
+}
+
+.error-message {
+  color: #fa424a;
+}
+
+.sign-in-box {
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+  background: #fff;
+  border: solid 1px #d8e2e7;
+  border-radius: 12px;
+  font-size: 1rem;
+  position: relative;
+
+  .sign-avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0;
+
+    img {
+      border-radius: 0;
+    }
+  }
+
+  button[type='submit'] {
+    min-width: 108px;
+    margin: 0 5.4rem;
+  }
+}
+
+// #sign-in-logo {
+//   padding: 20px 20px 0px;
+//   // img {
+//     // height: 80px;
+//   // }
+// }
+#logoImg {
+  display: block ;
+  margin: 0 auto 
+}
+
+#sign-in-logo .logo {
+    padding: 10px;  
+    width: 100%;
+    border-radius: 0;
+    border-radius: 5px 5px 0 0;
+    background-color: #4fa800;
+  
+}
+
+.signin-form {
+  padding: 20px;
+
+  .form-group {
+    margin: 1rem 0;
+  }
+}
+
+.sign-in-title {
+  /*20/16*/
+  font-size: 1.25rem;
+  text-align: center;
+  margin: .5rem;
+  line-height: normal;
+}
+
+#project-title {
+  line-height: 80px;
+}
+
+#login-logo {
+  text-align: center;
+  padding-top: 30px;
+
+  img {
+    width: 80px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .sign-in-box {
+    button[type='submit'] {
+      margin: 0;
+      width: 100%;
+    }
+  }
+
+  #sign-in-logo {
+    img {
+      height: 3.5rem;
+    }
+  }
+}

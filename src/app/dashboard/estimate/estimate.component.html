@@ -1,0 +1,314 @@
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a class="first" [class.active]="statusFilter==='open'" data-toggle="tab" data-placement="bottom" title="All Estimates that have an Estimate Status which is not Closed"
+      (click)="setCurrentStatusFilter('open')">
+      ACTIVE ESTIMATES
+      <span class="label label-pill label-success">{{openEstimateCount}}</span>
+    </a>
+  </li>
+  <li>
+    <a data-toggle="tab" href="#menu2"   (click)="setCurrentStatusFilter('jobcost')" >JOB COST
+      <span>16</span>
+    </a>
+  </li>
+  <li>
+    <a [class.active]="statusFilter==='emptyjobs'" data-toggle="tab" data-placement="bottom" title="All Jobs that do not have any Line Items assigned to them"
+      (click)="setCurrentStatusFilter('emptyjobs')">
+      EMPTY JOBS
+      <span class="label label-pill label-success">{{emptyJobCount}}</span>
+    </a>
+  </li>
+  <li>
+    <a [class.active]="statusFilter==='closed'" data-toggle="tab" data-placement="bottom" title="All Estimates with an Estimate Status of Closed"
+      (click)="setCurrentStatusFilter('closed')">
+      CLOSED ESTIMATES
+      <span class="label label-pill label-warning">{{closedEstimateCount}}</span>
+    </a>
+  </li>
+</ul>
+<div class=" break"></div>
+
+<div class="inline-row filter" id="filter">
+  <div class="column left-separator" style="width: 27%">
+    <div class=" has-feedback">
+      <input type="text" class="form-control" id="inputValidation" placeholder="Search" />
+      <span class="glyphicon glyphicon-search form-control-feedback" style="position: absolute;
+        top: 12px;"></span>
+    </div>
+
+  </div>
+  <div class="column left-separator" style="width: 12%;text-align: center"> Brands
+    <span class="value">8+</span>
+    <span class="caret"></span>
+  </div>
+  <div class="column left-separator" style="width: 12%;text-align: center">
+    PO Amount
+    <input type="checkbox">
+
+
+  </div>
+  <div class="column" style="width: 20%;text-align: center"> Date Entered
+    <span class="value"> 03/25/2018+</span>
+    <span class="caret"></span>
+  </div>
+  <div class="column" style="width: 20%;"></div>
+
+</div>
+<div class=" break"></div>
+
+<div *ngIf="statusFilter ==='open' || statusFilter ==='closed'">
+  <table>
+    <tr>
+      <th valign="top" style="white-space:nowrap" width="237">Project #</th>
+      <th valign="top" style="white-space:nowrap" width="237" >Project Name</th>
+      <th valign="top" style="white-space:nowrap" width="237" >Brand</th>
+      <th valign="top" style="white-space:nowrap" width="237">Po Amount</th>
+      <th valign="top" style="white-space:nowrap" width="237">Jobs</th>
+      <th valign="top" style="white-space:nowrap" width="237">Date Entered</th>
+      <th valign="top" style="white-space:nowrap" width="237">Estimate Status</th>
+      <th valign="top" style="white-space:nowrap" width="237">PO #</th>
+      <th valign="top" style="white-space:nowrap" width="237" >Invoice to Date</th>
+      <th valign="top" style="white-space:nowrap" width="237">To be Invoiced</th>
+      <th valign="top" style="white-space:nowrap" width="237">Notes</th>
+    </tr>
+    <tr *ngFor="let estimate of filteredEstimates">
+      <td>
+        <div style="color: #599f3f; font-weight: bold">
+          <a [routerLink]="['../estimateDetails',estimate.estimateId]" ngbPopover="{{estimate.jobListString}}" triggers="mouseenter:mouseleave"
+            popoverTitle="Jobs" container="body">{{estimate.projectNumber}}</a>
+        </div>
+      </td>
+      <td>{{estimate.projectName}}</td>
+      <td>{{estimate.brandName}}</td>
+      <td>
+        <div *ngIf="estimate.poAmount" [ngClass]="checkInvoiceAmount(estimate)">
+          <span [innerHTML]="currencyCode"></span>{{estimate.poAmount | number:'1.2-2'}}</div>
+      </td>
+      <td>{{estimate.jobCount}}</td>
+      <td>{{estimate.dateEntered | date:'yyyy-MM-dd'}}</td>
+      <td>{{estimate.status}}</td>
+      <td>{{estimate.poNumber}}</td>
+      <td>
+        <span [innerHTML]="currencyCode"></span>{{estimate.invoicedToDate | number:'1.2-2'}}</td>
+      <td>
+        <span [innerHTML]="currencyCode"></span>{{estimate.toBeInvoiced | number:'1.2-2'}}</td>
+      <td>{{estimate.notes}}</td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="statusFilter ==='emptyjobs'">
+  <table>
+    <tr>
+      <th>Job #</th>
+      <th>Project #</th>
+      <th>Project Name</th>
+      <th>Brand</th>
+      <th>Estimate Status</th>
+      <th>Date Entered</th>
+    </tr>
+    <tr *ngFor="let job of filteredJobs">
+      <td>{{job.jobNumber}}</td>
+      <td>
+        <div style="color: #599f3f; font-weight: bold">
+          <a [routerLink]="['../estimateDetails',job.estimateId]">{{job.projectNumber}}</a>
+        </div>
+      </td>
+      <td>{{job.projectName}}</td>
+      <td>{{job.brandName}}</td>
+      <td>{{job.projectStatus}}</td>
+      <td>{{job.dateEntered | date:'yyyy-MM-dd' }}</td>
+    </tr>
+  </table>
+</div>
+
+<div  *ngIf="statusFilter ==='jobcost'">
+
+</div>
+
+
+<!--      
+      <section class="tabs-section">
+        <div class="tabs-section-nav">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <button class="nav-link" [class.active]="statusFilter==='emptyjobs'" data-toggle="tooltip" data-placement="bottom" title="All Jobs that do not have any Line Items assigned to them" (click)="setCurrentStatusFilter('emptyjobs')">
+                    <span class="nav-link-in">Empty Jobs:
+                    <span class="label label-pill label-success">{{emptyJobCount}}</span>
+                    </span>
+                </button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" [class.active]="statusFilter==='open'" data-toggle="tooltip" data-placement="bottom" title="All Estimates that have an Estimate Status which is not Closed" (click)="setCurrentStatusFilter('open')">
+                <span class="nav-link-in">Active Estimates:
+                  <span class="label label-pill label-success">{{openEstimateCount}}</span>
+                </span>
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" [class.active]="statusFilter==='closed'" data-toggle="tooltip" data-placement="bottom" title="All Estimates with an Estimate Status of Closed" (click)="setCurrentStatusFilter('closed')">
+                <span class="nav-link-in">Closed Estimates:
+                  <span class="label label-pill label-warning">{{closedEstimateCount}}</span>
+                </span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </section> -->
+
+<!-- <div class="col-lg-3 col-lg-offset-3 pull-right">
+      <div class="tab-section-item">
+        <div class="">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            </div>
+            <input type="text" class="form-control" name="searchValue" placeholder="Search..." [ngModel]="searchValue" (ngModelChange)="updateFilter($event)">
+          </div>
+        </div>
+      </div>
+    </div> -->
+<!--  
+  <div class="row" *ngIf="statusFilter ==='emptyjobs'">
+    <div class="col-lg-12">
+        <div id="empty-jobs-container">
+        <datatable class="material striped" [rows]="filteredJobs" [options]="emptyJobOptions"></datatable>
+        </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="statusFilter ==='open' || statusFilter ==='closed'">
+    <div class="col-lg-12">
+      <div id="active-estimates-container">
+        <datatable class="material striped" [rows]="filteredEstimates" [options]="options"></datatable>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="statusFilter === 'invoice'">
+    <div class="col-lg-12">
+      <div id="invoiced-estimate-container">
+        <datatable class="material striped" [rows]="jobsToBeInvoiced"  [options]="jobOptions"></datatable>
+      </div>
+    </div>
+  </div> -->
+<!-- <div *ngIf="statusFilter !='invoice' && !userHasRole(1)" (mouseover)="showMenu()" class="right-corder-container">
+  <button type="button" class="right-corder-container-button" value="+" (click)="addEstimate()">
+    <span class="short-text">+</span>
+    <span class="long-text">Add Estimate</span>
+  </button>
+</div>
+<template #tmplNumberHeader let-column="column">
+  <span class="datatable-header-cell-label" style="text-align: center !important; float:none !important">{{column.name}}</span>
+</template>
+<template #linkTemplate let-row="row" let-value="value">
+  <a [routerLink]="['../estimateDetails', row['estimateId']]" ngbPopover="{{row.jobListString}}" triggers="mouseenter:mouseleave"
+    popoverTitle="Jobs" container="body">{{value}}</a>
+</template>
+<template #projectNumberTemplate let-row="row" let-value="value">
+  <a [routerLink]="['../estimateDetails', row['estimateId']]">{{value}}</a>
+</template>
+<template #currencyTemplate let-row="row" let-value="value">
+  <div class="grid-number">
+    <span [innerHTML]="currencyCode"></span>{{value | number:'1.2-2'}}</div>
+</template>
+<template #poAmountTemplate let-row="row" let-value="value">
+  <div *ngIf="value" class="grid-number" [ngClass]="checkInvoiceAmount(row)">
+    <span [innerHTML]="currencyCode"></span>{{value | number:'1.2-2'}}</div>
+</template>
+<template #poTemplate let-row="row" let-value="value">
+  <div class="grid-string" [ngClass]="checkInvoiceAmount(row)">{{value}}</div>
+</template>
+<template #numberTemplate let-row="row" let-value="value">
+  <div class="grid-number">{{value}}</div>
+</template>
+<template #notesTemplate let-row="row" let-value="value">
+  <button type="button" class="btn btn-sm btn-inline btn-secondary-outline" [ngbPopover]="value" trigger="manual" placement="right">Notes...</button>
+</template>
+<template #tmplNotesCol let-value="value" let-row="row">
+  <div>
+    <i [hidden]="row['notes'] !== '' && row['notes'] !== null" (click)="openNotesPopup(row)" class="fa fa-sticky-note-o"></i>
+    <i [hidden]="row['notes'] === '' || row['notes'] === null" (click)="openNotesPopup(row)" class="fa fa-sticky-note"></i>
+  </div>
+</template>
+<template #jobsTemplate>
+</template>
+<template #projectNoLinkTemplate let-row="row" let-value="value">
+  <a [routerLink]="['../estimateDetails', row['estimateId']]">{{value}}</a>
+</template>
+<template #tmplDateEntered let-row="row" let-value="value">
+  <span class="grid-number">{{value | date:'yyyy-MM-dd'}}</span>
+</template>
+<template #tmplLockCol let-value="value" let-row="row">
+  <div class="checkbox" style="text-align:right">
+    <input type="checkbox" id="chkLock-{{row['jobId']}}" [ngModel]="value" [disabled]="!userHasRole(11) || null" (change)="updatejobLockCheckboxValue($event, 'lock', value, row)"
+    />
+    <label attr.for="chkLock-{{row['jobId']}}"></label>
+  </div>
+</template>
+<template #tmplInvoiceReportCol let-value="value" let-row="row">
+  <input type="button" class="btn btn-primary" value="Invoice Report Cost" (click)="calculateInvoiceReportCost(row)" />
+</template>
+<template #tmplJobCostCol let-value="value" let-row="row">
+  <input type="button" class="btn btn-primary" value="Job Cost" (click)="calculateJobCost(row)" />
+</template>
+<template #linkFileTemplate let-row="row" let-value="value">
+  <span *ngFor="let pos of row['pos']">
+    <a target="_blank" href="{{getFileUrl(pos)}}">{{pos['fileName']}}</a>
+  </span>
+</template>
+<template #tmplNotesPopup let-dialogRef="dialogRef" let-ctx="dialogRef.context">
+  <div class="modal-header">
+    <h3 class="modal-title">Notes</h3>
+  </div>
+  <div class="modal-body estimate-details-line-item-notes">
+    <div>
+      {{notesForPopup}}
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button (click)="dialogRef.close(false)" class="btn btn-default">Cancel</button>
+  </div>
+</template>
+
+
+<template #tmplAddEstimate let-dialogRef="dialogRef" let-ctx="dialogRef.context">
+  <div class="modal-header">
+    <h3 class="modal-title">Add Estimate</h3>
+  </div>
+  <div class="modal-body">
+    <!-- <div class="form-group">
+     <div class="checkbox">
+        <input type="checkbox" id="old-project-checkbox" name="old-project-checkbox" [(ngModel)]="isOldProject">
+        <label for="old-project-checkbox">Project already created</label>
+      </div>
+    </div>  -->
+
+    <!-- <div class="form-group">
+      <label class="required" for="new-estimate-name">Project Name:</label>
+      <select *ngIf="isOldProject" name="project-list" id="project-list" class="form-control" [(ngModel)]="selectedEntityNumber">
+        <option value=""></option>
+        <option [value]="project.entityNumberId" *ngFor="let project of projects">{{project.entityNumber}} - {{project.description}}</option>
+      </select>
+      <input *ngIf="!isOldProject" type="text" maxlength="100" name="new-estimate-name" id="new-estimate-name" class="form-control"
+        [(ngModel)]="newEstimate.projectName" />
+    </div>
+    <!-- <div class="form-group"> -->
+      <!-- <label for="new-estimate-client">Client:</label>
+      <select name="new-estimate-client" id="new-estimate-client" class="form-control" [(ngModel)]="newEstimate.clientId">
+        <option value="0">-- Choose a Client --</option>
+        <option [ngValue]="client.id" *ngFor="let client of clients">{{client.name}}</option>
+      </select>
+    </div> --> 
+    <!-- <div class="form-group">
+      <label class="required" for="new-estimate-contact">Phototype Contact:</label>
+      <select name="new-estimate-contact" id="new-estimate-contact" class="form-control" [(ngModel)]="newEstimate.ptContactId">
+        <option value="0">-- Choose a Contact --</option>
+        <option [ngValue]="contact.id" *ngFor="let contact of contacts">{{contact.displayName}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button (click)="dialogRef.close(true)" [disabled]="newEstimate.clientId == 0 || newEstimate.ptContactId == 0 || newEstimate.projectName.trim() == ''"
+      class="btn btn-primary">OK</button>
+    <button (click)="dialogRef.close(false)" class="btn btn-default">Cancel</button>
+  </div>
+</template> -->

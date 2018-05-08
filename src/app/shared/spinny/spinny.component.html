@@ -1,0 +1,7 @@
+<div class="in modal-backdrop spinny-overlay"></div>
+<div class="spinny-message-container" aria-live="assertive" aria-atomic="true">
+  <div class="spinny-message">
+    <i *ngIf="showIcon" class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+    <div *ngIf="message !== null && message !== ''">{{message}}</div>
+  </div>
+</div>

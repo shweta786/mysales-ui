@@ -1,0 +1,3 @@
+<select class="form-control" name="client-list" id="client-list" class="form-control" [(ngModel)]="selectedClient" (ngModelChange)="changed($event)">
+  <option [ngValue]="client.id" *ngFor="let client of clients">{{client.name}}</option>
+</select>

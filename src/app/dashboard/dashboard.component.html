@@ -1,0 +1,12 @@
+<div class="wrapper">
+    <!-- <app-sidebar (linkClicked)="linkClicked($event)" [currentUser]="currentUser"></app-sidebar> -->
+    <app-sidebar  [currentUser]="currentUser"></app-sidebar>
+    
+    <div id="content">
+        <app-topnav [currentUser]="currentUser"></app-topnav>
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+        <template ngbModalContainer></template>
+    </div>
+</div>

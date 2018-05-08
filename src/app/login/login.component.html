@@ -1,0 +1,59 @@
+<!-- <div class="page-center" id="login-container">
+  <div class="page-center-in">
+    <div class="container-fluid">
+      <form class="sign-box" #form="ngForm" novalidate>
+        <img src="../../assets/img/brand/mySales_logo.png" width="100%" style="border-radius: 0%;" alt="">
+        <br><br>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="User Name" #username="ngModel" name="username" required maxlength="25"
+            [(ngModel)]="login.username" />
+          <small class="text-muted error-message" [style.visibility]="username?.errors?.required && username.dirty ? 'visible' : 'hidden'">Username must not be empty</small>
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" placeholder="Password" #password="ngModel" name="password" required maxlength="25"
+            [(ngModel)]="login.password" />
+          <small class="text-muted error-message" [style.visibility]="password?.errors?.required && password.dirty ? 'visible' : 'hidden'">Password must not be empty</small>
+        </div>
+        <header class="sign-title error-message" *ngIf="showErrorMessage">Login Failed</header>
+        <button type="submit" (click)="authenticateUser()" class="btn btn-rounded" [disabled]="!form.valid">Sign in</button>
+        <div id="login-logo">
+          <img src="./assets/img/brand/PT-SecondaryLogo05152015-Large.png" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div> -->
+<!--.page-center-->
+
+<div class="page-center" id="login-container">
+    <div class="page-center-in">
+      <div class="container-fluid">
+        <form class="sign-in-box" #form="ngForm" novalidate>
+          <div id="sign-in-logo">
+            <div class="logo">
+              <img src="../../assets/img/brand/mySales_logo_white.png" id="logoImg" alt="">
+            </div>
+          </div>
+          <div class="signin-form">
+            <div class="form-group">
+              <!-- <span class="glyphicon glyphicon-user" aria-hidden="true"></span> -->
+              <input type="text" class="form-control" placeholder="Username" #username="ngModel" name="username" required maxlength="25"
+                [(ngModel)]="login.username" />
+              <small class="text-muted error-message" [style.visibility]="username?.errors?.required && username.dirty ? 'visible' : 'hidden'">Username must not be empty</small>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="Password" #password="ngModel" name="password" required maxlength="25"
+                [(ngModel)]="login.password" />
+              <small class="text-muted error-message" [style.visibility]="password?.errors?.required && password.dirty ? 'visible' : 'hidden'">Password must not be empty</small>
+            </div>
+            <header class="sign-in-title error-message" *ngIf="showErrorMessage">Login Failed</header>
+            <button id="btn-submit" type="submit" (click)="authenticateUser()" class="btn btn-rounded" [disabled]="!form.valid">Sign in</button>
+            <div id="login-logo">
+              <img src="./assets/img/brand/PT-SecondaryLogo05152015-Large.png" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!--.page-center-->
